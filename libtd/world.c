@@ -17,6 +17,11 @@ void td_world_destroy(td_World* world)
     free(world);
 }
 
+size_t td_world_shapes(td_World* world, td_Shape* shapes, size_t max_shapes)
+{
+    return 0;
+}
+
 td_Person* td_world_add_person(td_World* world, float x, float y)
 {
     return NULL;
