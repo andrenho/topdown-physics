@@ -1,6 +1,7 @@
 #include "world.h"
 
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
 
 int main(int argc, char** argv)
 {
@@ -42,9 +43,39 @@ int main(int argc, char** argv)
             }
         }
 
+        // adjust zoom and position
+
+        const float zoom_ = 10.f;
+        const float center_x = 0.f, center_y = 0.f;
+        ALLEGRO_TRANSFORM t;
+        al_identity_transform(&t);
+        al_scale_transform(&t, zoom_, zoom_);
+        al_translate_transform(&t,
+                               ((float) al_get_display_width(disp_) / 2.f) - (center_x * zoom_),
+                               ((float) al_get_display_height(disp_) / 2.f) - (center_y * zoom_));
+        al_use_transform(&t);
+
         // render
 
         al_clear_to_color(al_map_rgb(255, 255, 255));
+        static td_Shape shape[10000];
+        size_t n_shapes = td_world_shapes(world, shape, sizeof(shape));
+        for (size_t i = 0; i < n_shapes; ++i) {
+            switch (shape[i].type) {
+                case ST_CIRCLE:
+                    al_draw_circle(shape[i].circle.x, shape[i].circle.y, shape[i].circle.radius, al_map_rgb(0, 0, 0), 0.1f);
+                    break;
+                case ST_POLYGON: {
+                    float pts[16];
+                    for (size_t j = 0; j < shape[i].polygon.n_points; ++j) {
+                        pts[(j*2)] = shape[i].polygon.x[j];
+                        pts[(j*2)+1] = shape[i].polygon.y[j];
+                    }
+                    al_draw_polygon(pts, shape[i].polygon.n_points, ALLEGRO_LINE_JOIN_ROUND, al_map_rgb(0, 0, 0), 0.1f, 0);
+                    break;
+                }
+            }
+        }
         al_flip_display();
     }
 
