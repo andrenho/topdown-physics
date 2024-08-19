@@ -13,3 +13,28 @@ cpShape* shape_to_cpShape(td_Shape* shape, cpBody* body)
         }
     }
 }
+
+void cpShape_to_shape(cpShape* shape, td_Shape* out)
+{
+    td_ShapeType shape_type = (td_ShapeType) (intptr_t) cpShapeGetUserData(shape);
+    out->type = shape_type;
+    switch (shape_type) {
+        case ST_CIRCLE: {
+            cpVect pos = cpCircleShapeGetOffset(shape);
+            out->circle.x = pos.x;
+            out->circle.y = pos.y;
+            out->circle.radius = cpCircleShapeGetRadius(shape);
+            break;
+        }
+        case ST_POLYGON:
+            out->polygon.n_points = cpPolyShapeGetCount(shape);
+            for (size_t i = 0; i < out->polygon.n_points; ++i) {
+                if (i == 8)
+                    break;
+                cpVect vect = cpPolyShapeGetVert(shape, i);
+                out->polygon.x[i] = vect.x;
+                out->polygon.y[i] = vect.y;
+            }
+            break;
+    }
+}

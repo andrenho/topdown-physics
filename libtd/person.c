@@ -1,18 +1,20 @@
 #include "person.h"
 #include "bodydata.h"
+#include "geometry.h"
 
 cpBody* td_person_create(cpSpace* space, float x, float y, void* data)
 {
     // create body
-    cpBody* body = cpSpaceAddBody(space, cpBodyNew(10, INFINITY));
+    cpBody* body = cpSpaceAddBody(space, cpBodyNew(10.f, INFINITY));
     cpBodySetPosition(body, cpv(x, y));
 
     // create shape
     cpShape* shape = cpSpaceAddShape(space, cpCircleShapeNew(body, 0.5f, cpvzero));
     cpShapeSetFriction(shape, 0.1);
+    cpShapeSetUserData(shape, (void *) ST_CIRCLE);
 
     // create target body
-    cpBody* target = cpBodyNew(INFINITY, INFINITY);
+    cpBody* target = cpBodyNew(0.f, INFINITY);
     cpBodySetPosition(target, cpv(x, y));
 
     // create target joint

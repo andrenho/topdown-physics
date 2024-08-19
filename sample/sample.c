@@ -8,6 +8,7 @@ int main(int argc, char** argv)
     // initialize
 
     td_World* world = td_create();
+    td_Unit* hero = td_add_person(world, 0.f, 0.f, NULL);
     td_add_static_obj(world, &(td_Shape) {
             .type = ST_CIRCLE,
             .circle = { .x = 4, .y = 4, .radius = 2 }
