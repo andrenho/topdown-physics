@@ -11,7 +11,9 @@ add_library(td STATIC
         libtd/world.c
         libtd/world.h
         libtd/person.c
-        libtd/person.h)
+        libtd/person.h
+        libtd/bodydata.h
+)
 
 target_include_directories(td PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Chipmunk2D/include)

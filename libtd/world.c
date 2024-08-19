@@ -1,30 +1,35 @@
 #include "world.h"
+#include "person.h"
 
 #include <stdlib.h>
 #include <stddef.h>
 
 typedef struct td_World {
+    cpSpace* space;
 } td_World;
 
-td_World* td_world_create()
+td_World* td_create()
 {
-    td_World* w = calloc(1, sizeof(td_World));
-    return w;
+    td_World* world = calloc(1, sizeof(td_World));
+    world->space = cpSpaceNew();
+    return world;
 }
 
-void td_world_destroy(td_World* world)
+void td_destroy(td_World* world)
 {
+    // TODO - free all units
+    cpSpaceFree(world->space);
     free(world);
 }
 
-size_t td_world_shapes(td_World* world, td_Shape* shapes, size_t max_shapes)
+size_t td_shapes(td_World* world, td_Shape* shapes, size_t max_shapes)
 {
     return 0;
 }
 
-td_Person* td_world_add_person(td_World* world, float x, float y)
+cpBody* td_add_person(td_World* world, float x, float y, void* data)
 {
-    return NULL;
+    return td_person_create(world->space, x, y, data);
 }
 
 void td_world_add_static_obj(td_World* world, td_Shape* shape)

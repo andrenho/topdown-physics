@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
     // initialize
 
-    td_World* world = td_world_create();
+    td_World* world = td_create();
 
     al_init();
     al_install_keyboard();
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
 
         al_clear_to_color(al_map_rgb(255, 255, 255));
         static td_Shape shape[10000];
-        size_t n_shapes = td_world_shapes(world, shape, sizeof(shape));
+        size_t n_shapes = td_shapes(world, shape, sizeof(shape));
         for (size_t i = 0; i < n_shapes; ++i) {
             switch (shape[i].type) {
                 case ST_CIRCLE:
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 done:
     al_destroy_event_queue(queue_);
     al_destroy_display(disp_);
-    td_world_destroy(world);
+    td_destroy(world);
 
     return 0;
 }

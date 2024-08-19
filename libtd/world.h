@@ -3,17 +3,19 @@
 
 #include <stddef.h>
 
-#include "person.h"
 #include "geometry.h"
+#include "chipmunk/chipmunk.h"
 
 typedef struct td_World td_World;
 
-td_World* td_world_create();
-void      td_world_destroy(td_World* world);
+typedef cpBody td_Unit;
 
-size_t    td_world_shapes(td_World* world, td_Shape* shapes, size_t max_shapes);
+td_World* td_create();
+void      td_destroy(td_World* world);
 
-td_Person* td_world_add_person(td_World* world, float x, float y);
-void       td_world_add_static_obj(td_World* world, td_Shape* shape);
+size_t    td_shapes(td_World* world, td_Shape* shapes, size_t max_shapes);
+
+td_Unit*  td_add_person(td_World* world, float x, float y, void* data);
+void      td_add_static_obj(td_World* world, td_Shape* shape);
 
 #endif
