@@ -8,6 +8,12 @@ int main(int argc, char** argv)
     // initialize
 
     td_World* world = td_create();
+    td_add_static_obj(world, &(td_Shape) {
+            .type = ST_CIRCLE,
+            .circle = { .x = 4, .y = 4, .radius = 2 }
+    });
+
+    // initialize UI
 
     al_init();
     al_install_keyboard();

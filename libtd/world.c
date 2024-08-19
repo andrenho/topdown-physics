@@ -1,5 +1,6 @@
 #include "world.h"
 #include "person.h"
+#include "conversion.h"
 
 #include <stdlib.h>
 #include <stddef.h>
@@ -32,6 +33,9 @@ cpBody* td_add_person(td_World* world, float x, float y, void* data)
     return td_person_create(world->space, x, y, data);
 }
 
-void td_world_add_static_obj(td_World* world, td_Shape* shape)
+void td_add_static_obj(td_World* world, td_Shape* shape)
 {
+    cpShape* shp = shape_to_cpShape(shape, cpSpaceGetStaticBody(world->space));
+    cpShapeSetFriction(shp, 1);
+    cpSpaceAddShape(world->space, shp);
 }

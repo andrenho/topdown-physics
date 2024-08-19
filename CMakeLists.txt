@@ -13,6 +13,8 @@ add_library(td STATIC
         libtd/person.c
         libtd/person.h
         libtd/bodydata.h
+        libtd/conversion.c
+        libtd/conversion.h
 )
 
 target_include_directories(td PUBLIC
